@@ -36,7 +36,7 @@ CFLAGS=-Wunused -Wall $(OPT)
 MTH=-lm
 # Interfaz gráfica GTK+
 GTK=`pkg-config --cflags --libs gtk+-3.0`
-
+# Manejo de imagenes PNG (Portable Network Graphics)
 PNG=-lpng
 
 LIB=$(PNG) $(GTK) $(MTH)

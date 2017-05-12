@@ -5,7 +5,62 @@
 
 typedef int (*compare_color_fn_t)(Color, Color);
 
+/* http://stackoverflow.com/questions/2509679/how-to-generate-a-random-number-from-within-a-range */
+unsigned int rand_interval(unsigned int min, unsigned int max)
+{
+    int r;
+    const unsigned int range = 1 + max - min;
+    const unsigned int buckets = RAND_MAX / range;
+    const unsigned int limit = buckets * range;
 
+    /* Create equal size buckets all in a row, then fire randomly towards
+     * the buckets until you land in one of them. All buckets are equally
+     * likely. If you land off the end of the line of buckets, try again. */
+    do
+    {
+        r = rand();
+    } while (r >= limit);
+
+    return min + (r / buckets);
+}
+
+/** Compare two colors on the L channel */
+int i_compare_L(Color c1, Color c2)
+{
+	if(c1.L < c2.L) return -1;
+	else if(c1.L > c2.L) return 1;
+	else return 0;
+}
+
+/** Compare two colors on the a channel */
+int i_compare_a(Color c1, Color c2)
+{
+	if(c1.a < c2.a) return -1;
+	else if(c1.a > c2.a) return 1;
+	else return 0;
+}
+
+/** Compare two colors on the b channel */
+int i_compare_b(Color c1, Color c2)
+{
+	if(c1.b < c2.b) return -1;
+	else if(c1.b > c2.b) return 1;
+	else return 0;
+}
+
+/** Compare two colors on a given channel */
+int compare(Color c1, Color c2, Axis ax)
+{
+	switch(ax)
+	{
+		case L: return i_compare_L(c1,c2);
+		case a: return i_compare_a(c1,c2);
+		case b: return i_compare_b(c1,c2);
+	}
+	abort();
+}
+
+/** Swaps the values of two elements in an array */
 static void swap(Color* array, int i, int j)
 {
 	Color aux = array[i];
@@ -13,6 +68,7 @@ static void swap(Color* array, int i, int j)
 	array[j] = aux;
 }
 
+/** Quicksort partition routine */
 static int partition(Color* a, int e, int w, compare_color_fn_t compare)
 {
 	if(e >= w) abort();
@@ -40,32 +96,13 @@ static int partition(Color* a, int e, int w, compare_color_fn_t compare)
 	return j;
 }
 
-static long random_at_most(long max)
-{
-  unsigned long
-    // max <= RAND_MAX < ULONG_MAX, so this is okay.
-    num_bins = (unsigned long) max + 1,
-    num_rand = (unsigned long) RAND_MAX + 1,
-    bin_size = num_rand / num_bins,
-    defect   = num_rand % num_bins;
-
-  long x;
-  do {
-   x = random();
-  }
-  // This is carefully written not to overflow
-  while (num_rand - defect <= (unsigned long)x);
-
-  // Truncated division is intentional
-  return x/bin_size;
-}
-
+/** Choosing of random pivot for partition */
 static int randomPartition(Color* a, int e, int w, compare_color_fn_t compare)
 {
 	int j;
-	if(w-e > 0)
+	if(w - e > 0)
 	{
-		j = random_at_most(w - e) + e;
+		j = rand_interval(e, w);
 	}
 	else
 	{
@@ -77,12 +114,11 @@ static int randomPartition(Color* a, int e, int w, compare_color_fn_t compare)
 	return partition(a, e, w, compare);
 }
 
-/** Ordena parcialmente el arreglo de manera que a[k] queda conteniendo el valor correcto */
+/** Partially sorts the array so that a[k] ends in its correct position */
 static void quickselect(Color* a, int e, int w, int k, compare_color_fn_t compare)
 {
 	if(e < w)
 	{
-		// printf("Sorting %p[%d,%d]\n", a,e,w);
 		int m = randomPartition(a, e, w, compare);
 
 		if(m > k) return quickselect(a, e, m-1, k, compare);
@@ -90,6 +126,7 @@ static void quickselect(Color* a, int e, int w, int k, compare_color_fn_t compar
 	}
 }
 
+/** Finds the median of the array on a given channel */
 Color find_median(Color* colors, int length, Axis ax)
 {
 	switch(ax)

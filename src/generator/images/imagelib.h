@@ -4,17 +4,19 @@
 
 struct image
 {
-	/** Matriz de colores que corresponde a la imagen */
+	/** 2D Matrix of colors, the image itself */
 	Color** pixels;
-	/** Ancho de la imagen */
+	/** Width of the image, size of a row */
 	int width;
-	/** Alto de la imagen */
+	/** Height of the image, size of a column */
 	int height;
 };
-/** Representa una imagen RGB como una matriz de colores */
+/** Represents a L*a*b image as a simple color matrix */
 typedef struct image Image;
 
-/** Lee un archivo .png y entrega la imagen */
+/** Reads a .png file and converts it to a color matrix */
 Image* img_png_read_from_file (char* filename);
-/** Escribe el contenido de una imagen como archivo .png */
+/** Writes a color matrix on to a .png file */
 void   img_png_write_to_file  (Image* img, char* filename);
+/** Frees the resources used by the image */
+void   img_png_destroy        (Image* img);

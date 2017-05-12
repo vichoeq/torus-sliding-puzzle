@@ -1,9 +1,6 @@
-#include "imagelib/imagelib.h"
-#include "kdtrees/reduce.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <time.h>
+#include "reduce.h"
 #include "images/imagelib.h"
 
 int main(int argc, char *argv[])
@@ -18,16 +15,16 @@ int main(int argc, char *argv[])
   }
 
 	/* Cargar la imagen */
-	Image_lab *image = load_image_lab(argv[1]);
+	Image* image = img_png_read_from_file(argv[1]);
 
 	/* Procesar la imagen */
   reduce(image, atoi(argv[3]));
 
   /* Escribir la imagen resultante */
-  write_image_lab(argv[2], image);
+	img_png_write_to_file(image, argv[2]);
 
 	/* Liberar los recursos */
-  free_image_lab(image);
+	img_png_destroy(image);
 
   return 0;
 }

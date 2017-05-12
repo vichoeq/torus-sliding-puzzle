@@ -1,29 +1,10 @@
 #include "geometry.h"
 #include <math.h>
 
-Axis get_splitting_axis(AABB box)
-{
-	float DL = box.max.L - box.min.L;
-	float Da = box.max.a - box.min.a;
-	float Db = box.max.b - box.min.b;
-
-	if(Da <= Db)
-	{
-		if(Db <= DL)
-		{
-			return L;
-		}
-		return b;
-	}
-	if(Da <= DL)
-	{
-		return L;
-	}
-	return a;
-}
-
+/** Indicates whether a given sphere collides with a box or not */
 bool aabb_collides_sphere(AABB box, Color center, double radius)
 {
+	//TODO maybe this is not so right...
 	Color closest;
 
 	// get box closest point to sphere center by clamping
@@ -34,6 +15,7 @@ bool aabb_collides_sphere(AABB box, Color center, double radius)
 	return euclidean_distance(closest, center) < radius;
 }
 
+/** Creates an empty box */
 AABB aabb_empty()
 {
 	AABB box;
@@ -49,6 +31,7 @@ AABB aabb_empty()
 	return box;
 }
 
+/** Expands the box so the point can be in it */
 AABB aabb_add_point(AABB box, Color c)
 {
 	box.max.L = fmax(box.max.L, c.L);
@@ -62,6 +45,8 @@ AABB aabb_add_point(AABB box, Color c)
 	return box;
 }
 
+
+/** Creates the thightest box containing the two given boxes */
 AABB aabb_join_aabb(AABB box1, AABB box2)
 {
 	AABB box;
@@ -77,6 +62,7 @@ AABB aabb_join_aabb(AABB box1, AABB box2)
 	return box;
 }
 
+/** Creates a box big enough to contain a single point */
 AABB aabb_from_point(Color c)
 {
 	AABB box;
@@ -92,7 +78,8 @@ AABB aabb_from_point(Color c)
 	return box;
 }
 
-AABB aabb_find(Color* colors, int length)
+/** Builds the thightest box containing all the given points */
+AABB aabb_build(Color* colors, int length)
 {
 	AABB box = aabb_empty();
 

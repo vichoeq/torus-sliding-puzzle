@@ -1,5 +1,5 @@
 /*
-* Basado en código de ejemplo para libpng
+* Based on example code for PNG
 * https://gist.github.com/niw/5963798
 */
 #include "imagelib.h"
@@ -12,7 +12,7 @@
 
 
 
-/** Code by Vicho Dragicevic */
+/** Code by Vicho Dragicevic (https://github.com/vdrg) */
 Color rgb_2_lab(uint8_t R, uint8_t G, uint8_t B)
 {
   float var_R = R/255.0;
@@ -55,7 +55,7 @@ Color rgb_2_lab(uint8_t R, uint8_t G, uint8_t B)
   return p;
 }
 
-/** Code by Vicho Dragicevic */
+/** Code by Vicho Dragicevic (https://github.com/vdrg) */
 void lab_2_rgb(Color color, uint8_t* R, uint8_t* G, uint8_t *B)
 {
 	float l_s = color.L;
@@ -98,7 +98,7 @@ void lab_2_rgb(Color color, uint8_t* R, uint8_t* G, uint8_t *B)
   *B = (uint8_t) (var_B * 255.);
 }
 
-/** Lee un archivo .png y entrega la imagen */
+/** Reads a .png file and converts it to a color matrix */
 Image* img_png_read_from_file (char* filename)
 {
 	Image* img = malloc(sizeof(Image));
@@ -178,7 +178,7 @@ Image* img_png_read_from_file (char* filename)
 	return img;
 }
 
-/** Escribe el contenido de una imagen como archivo .png */
+/** Writes a color matrix on to a .png file */
 void img_png_write_to_file(Image* img, char* filename)
 {
 	FILE *fp = fopen(filename, "wb");
@@ -231,4 +231,15 @@ void img_png_write_to_file(Image* img, char* filename)
   fclose(fp);
 
 	if (png && info) png_destroy_write_struct(&png, &info);
+}
+
+/** Frees the resources used by the image */
+void img_png_destroy(Image* img)
+{
+	for(int row = 0; row < img -> height; row++)
+	{
+		free(img -> pixels[row]);
+	}
+	free(img -> pixels);
+	free(img);
 }
