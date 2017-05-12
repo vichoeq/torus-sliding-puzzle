@@ -26,11 +26,11 @@ static Puzzle* initial_state()
 {
 	Puzzle* puz = malloc(sizeof(Puzzle));
 
-	puz -> height = 3;
-	puz -> width = 2;
+	// puz -> height = 3;
+	// puz -> width = 2;
 
-	// fscanf(stdin, "%hhu", &puz -> height);
-	// fscanf(stdin, "%hhu", &puz -> width);
+	fscanf(stdin, "%hhu", &puz -> height);
+	fscanf(stdin, "%hhu", &puz -> width);
 
 	puz -> matrix = calloc(puz -> height, sizeof(uint8_t*));
 	for(uint8_t row = 0; row < puz -> height; row++)
@@ -39,8 +39,8 @@ static Puzzle* initial_state()
 		for(uint8_t col = 0; col < puz -> width; col++)
 		{
 			// puz -> matrix[row][col] = 0;
-			puz -> matrix[row][col] = (row+col) % 8;
-			// fscanf(stdin, "%hhu", &puz -> matrix[row][col]);
+			// puz -> matrix[row][col] = (row+col) % 8;
+			fscanf(stdin, "%hhu", &puz -> matrix[row][col]);
 		}
 	}
 	return puz;
@@ -58,17 +58,21 @@ int main(int argc, char** argv)
 
 	srand(time(NULL));
 
+
+	Color* palette = color_table();
+
 	Puzzle* puz = initial_state();
 
 	Content cont =
 	{
-		.color_table = color_table(),
+		.color_table = palette,
 		.puz = puz,
 		.mode = ALL,
 		.cell_size = compute_cell_size(puz),
 		.offset = 0,
 		.index = 0
 	};
+
 
 	drawing_init(cont.color_table, cont.cell_size);
 

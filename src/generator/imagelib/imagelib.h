@@ -1,6 +1,18 @@
 #pragma once
 
-#include "../color/color.h"
+#include <stdint.h>
+
+struct color
+{
+	/** Red channel */
+	uint8_t R;
+	/** Green channel */
+	uint8_t G;
+	/** Blue channel */
+	uint8_t B;
+};
+/** Representa un color en RGB */
+typedef struct color Color;
 
 struct image
 {

@@ -21,22 +21,22 @@ Color* color_table()
 {
 	Color* table = calloc(8, sizeof(Color));
 
-	table[0] = color_init(0,0,0);
-	table[1] = color_init(0,0,255);
-	table[2] = color_init(0,255,0);
-	table[3] = color_init(0,255,255);
-	table[4] = color_init(255,0,0);
-	table[5] = color_init(255,0,255);
-	table[6] = color_init(255,255,0);
-	table[7] = color_init(255,255,255);
+	// table[0] = color_init(0,0,0);
+	// table[1] = color_init(0,0,255);
+	// table[2] = color_init(0,255,0);
+	// table[3] = color_init(0,255,255);
+	// table[4] = color_init(255,0,0);
+	// table[5] = color_init(255,0,255);
+	// table[6] = color_init(255,255,0);
+	// table[7] = color_init(255,255,255);
 
-	// uint8_t r,g,b;
-	//
-	// for(uint8_t i = 0; i < 8; i++)
-	// {
-	// 	fscanf(stdin, "%hhu %hhu %hhu", &r, &g, &b);
-	// 	table[i] = color_init(r, g, b);
-	// }
+	uint8_t r,g,b;
+
+	for(uint8_t i = 0; i < 8; i++)
+	{
+		fscanf(stdin, "%hhu %hhu %hhu", &r, &g, &b);
+		table[i] = color_init(r, g, b);
+	}
 
 	return table;
 }

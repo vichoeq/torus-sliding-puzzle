@@ -6,8 +6,8 @@
 #include "animation.h"
 #include "../drawing/drawing.h"
 
-#define TOTALTIME 128.0
-#define TIMESTEP 2.0
+#define TOTALTIME 192.0
+#define TIMESTEP 4.0
 
 /** El thread encargado de actualizar el contenido de la ventana */
 static pthread_t* update_thread;
