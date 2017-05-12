@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include "../puzzle/puzzle.h"
 #include "window.h"
-#include "drawing.h"
-#include "color.h"
+#include "drawing/drawing.h"
+#include "drawing/color.h"
 #include <math.h>
 
 static double compute_cell_size(Puzzle* puz)

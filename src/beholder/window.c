@@ -2,8 +2,7 @@
 #include <gtk/gtk.h>
 #include <math.h>
 #include "window.h"
-#include "drawing.h"
-#include "animation.h"
+#include "animating/animation.h"
 
 /** Dibuja la imagen en la ventana */
 static gboolean draw(GtkWidget* widget, cairo_t* cr, gpointer data)

@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "animation.h"
-#include "drawing.h"
+#include "../drawing/drawing.h"
 
 #define TOTALTIME 128.0
 #define TIMESTEP 2.0

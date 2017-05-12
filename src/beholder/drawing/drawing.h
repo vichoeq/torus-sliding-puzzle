@@ -3,7 +3,7 @@
 #include <cairo.h>
 #include <stdbool.h>
 #include "color.h"
-#include "../puzzle/puzzle.h"
+#include "../../puzzle/puzzle.h"
 #include <pthread.h>
 
 #define CELL_SIZE 64.0
