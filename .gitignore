@@ -1,36 +1,22 @@
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Ignore all
+*
 
-# Precompiled Headers
-*.gch
-*.pch
+# Unignore all with extensions
+!*.*
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Unignore all dirs
+!*/
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+### Above combination will ignore all files without extension ###
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Object directory
+obj/
 
-# Debug files
-*.dSYM/
-*.su
+# Ignore png files
+*.png
 
-# Project specific
-obj
+# Except for the ones inside the template folder
+!templates/*.png
+
+!Makefile
+!LICENSE
