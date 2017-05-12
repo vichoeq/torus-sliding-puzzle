@@ -1,19 +1,30 @@
 #include "geometry.h"
 #include <math.h>
 
-double euclidean_distance(Color_lab p1, Color_lab p2)
+Axis get_splitting_axis(AABB box)
 {
-  return sqrt(euclidean_distance_squared(p1, p2));
+	float DL = box.max.L - box.min.L;
+	float Da = box.max.a - box.min.a;
+	float Db = box.max.b - box.min.b;
+
+	if(Da <= Db)
+	{
+		if(Db <= DL)
+		{
+			return L;
+		}
+		return b;
+	}
+	if(Da <= DL)
+	{
+		return L;
+	}
+	return a;
 }
 
-double euclidean_distance_squared(Color_lab p1, Color_lab p2)
+bool aabb_collides_sphere(AABB box, Color center, double radius)
 {
-	return pow(p2.L - p1.L, 2) + pow(p2.a - p1.a, 2) + pow(p2.b - p1.b, 2);
-}
-
-bool aabb_collides_sphere(AABB box, Color_lab center, double radius)
-{
-	Color_lab closest;
+	Color closest;
 
 	// get box closest point to sphere center by clamping
 	closest.L = fmaxf(box.min.L, fminf(center.L, box.max.L));
@@ -38,7 +49,7 @@ AABB aabb_empty()
 	return box;
 }
 
-AABB aabb_add_point(AABB box, Color_lab c)
+AABB aabb_add_point(AABB box, Color c)
 {
 	box.max.L = fmax(box.max.L, c.L);
 	box.max.a = fmax(box.max.a, c.a);
@@ -66,7 +77,7 @@ AABB aabb_join_aabb(AABB box1, AABB box2)
 	return box;
 }
 
-AABB aabb_from_point(Color_lab c)
+AABB aabb_from_point(Color c)
 {
 	AABB box;
 
@@ -81,7 +92,7 @@ AABB aabb_from_point(Color_lab c)
 	return box;
 }
 
-AABB aabb_find(Color_lab* colors, int length)
+AABB aabb_find(Color* colors, int length)
 {
 	AABB box = aabb_empty();
 

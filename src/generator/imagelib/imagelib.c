@@ -24,12 +24,12 @@ Image_lab *load_image_lab(char const *path) {
   }
 
   int image_size = image->width * image->height;
-  image->pixels = calloc(image_size, sizeof(Color_lab));
+  image->pixels = calloc(image_size, sizeof(Color));
   for (int i = 0; i < image_size; i++) {
       // Create new pixel from the image's data
       uint8_t *pixel_data = &data[i * 3];
 
-      Color_lab pixel = rgb2lab(pixel_data[0], pixel_data[1], pixel_data[2]);
+      Color pixel = rgb2lab(pixel_data[0], pixel_data[1], pixel_data[2]);
 
       image->pixels[i] = pixel;
   }
@@ -78,7 +78,7 @@ void free_image_lab(Image_lab *image) {
   free(image);
 }
 
-Color_lab rgb2lab(uint8_t R, uint8_t G, uint8_t B)
+Color rgb2lab(uint8_t R, uint8_t G, uint8_t B)
 {
   float var_R = R/255.0;
   float var_G = G/255.0;
@@ -116,7 +116,7 @@ Color_lab rgb2lab(uint8_t R, uint8_t G, uint8_t B)
   float l_s = ( 116. * var_Y ) - 16.;
   float a_s = 500. * ( var_X - var_Y );
   float b_s = 200. * ( var_Y - var_Z );
-  Color_lab p = {l_s, a_s, b_s};
+  Color p = {l_s, a_s, b_s};
   return p;
 }
 

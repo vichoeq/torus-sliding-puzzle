@@ -1,16 +1,11 @@
 #pragma once
 #include <stdint.h>
-
-typedef struct pixel_lab {
-  double L; // Lightness channel
-  double a; // Magenta/Green channel
-  double b; // Cyan/Yellow channel
-} Color_lab;
+#include "../color/color.h"
 
 typedef struct image_lab {
   int width; // The width of the image in pixels
   int height; // The height of the image in pixels
-  Color_lab *pixels; // Pixel data
+  Color *pixels; // Pixel data
 } Image_lab;
 
 /*
@@ -33,6 +28,6 @@ void free_image_lab(Image_lab *image);
  * Receives a RGB colour and returns a transformed colour in the
  * lab colour space.
  */
-Color_lab rgb2lab( uint8_t R, uint8_t G, uint8_t B);
+Color rgb2lab( uint8_t R, uint8_t G, uint8_t B);
 
 void lab2rgb( float l_s, float a_s, float b_s, uint8_t *R, uint8_t *G, uint8_t *B );

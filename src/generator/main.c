@@ -4,10 +4,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include "images/imagelib.h"
 
-
-int main(int argc, char *argv[]) {
-  if (argc < 4) {
+int main(int argc, char *argv[])
+{
+  if (argc < 4)
+	{
     printf("Usage: %s <source> <target> <k>\nwhere\n", argv[0]);
 		printf("\t<source> is the source image\n");
 		printf("\t<target> is the target image\n");
@@ -15,33 +17,17 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-
-	printf("Loading image %s\n", argv[1]);
-	clock_t start = clock();
-
+	/* Cargar la imagen */
 	Image_lab *image = load_image_lab(argv[1]);
 
-
-	printf("Image loaded in %lf seconds\n", (double)(clock() - start) / CLOCKS_PER_SEC);
-
-  // OJO: a reduce le pasamos un puntero a la imagen y el número de colores.
-	start = clock();
+	/* Procesar la imagen */
   reduce(image, atoi(argv[3]));
-	printf("Student took %lf seconds\n", (double)(clock() - start) / CLOCKS_PER_SEC);
 
-  /*
-   * Escribimos la imagen, que fue procesada por reduce().
-   */
-	printf("Writing image\n");
-	start = clock();
+  /* Escribir la imagen resultante */
   write_image_lab(argv[2], image);
-	printf("Image written in %lf seconds\n", (double)(clock() - start) / CLOCKS_PER_SEC);
 
-	printf("Freeing image\n");
-	start = clock();
+	/* Liberar los recursos */
   free_image_lab(image);
-	printf("Image freed in %lf seconds\n", (double)(clock() - start) / CLOCKS_PER_SEC);
-
 
   return 0;
 }

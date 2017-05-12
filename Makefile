@@ -37,7 +37,9 @@ MTH=-lm
 # Interfaz gráfica GTK+
 GTK=`pkg-config --cflags --libs gtk+-3.0`
 
-LIB=$(GTK) $(MTH)
+PNG=-lpng
+
+LIB=$(PNG) $(GTK) $(MTH)
 
 ###############################################################################
 # MÓDULOS Y PROGRAMAS                                                         #
