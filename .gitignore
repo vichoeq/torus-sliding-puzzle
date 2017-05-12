@@ -33,6 +33,4 @@
 *.su
 
 # Project specific
-.beholder
 obj
-.untangle

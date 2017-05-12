@@ -4,9 +4,12 @@
 #include <stdbool.h>
 #include "color.h"
 #include "../puzzle/puzzle.h"
+#include <pthread.h>
 
 #define CELL_SIZE 64.0
-#define MAX_DIMENSION (512.0 + 128.0)
+#define MAX_DIMENSION 640
+
+pthread_mutex_t drawing_mutex;
 
 /** Indica el modo de dibujo */
 enum draw_mode
@@ -45,5 +48,7 @@ typedef struct content Content;
 void drawing_init(Color* color_table, double const cell_size);
 
 void drawing_free();
+
+
 /** Dibuja sobre el canvas dado */
 bool canvas_draw(cairo_t* cr, Content* cont);

@@ -6,15 +6,14 @@
 #include "animation.h"
 #include "drawing.h"
 
-#define TOTALTIME 300.0
-#define TIMESTEP 10.0
-
+#define TOTALTIME 128.0
+#define TIMESTEP 2.0
 
 /** El thread encargado de actualizar el contenido de la ventana */
 static pthread_t* update_thread;
 
 /** Intercambia los valores de dos variables a y b */
-void double_swap(double* a, double* b)
+static void double_swap(double* a, double* b)
 {
 	double aux = *a;
 	*a = *b;
@@ -22,7 +21,7 @@ void double_swap(double* a, double* b)
 }
 
 /** Anima cuadro por cuadro el desplazamiento de una fila o columna */
-void animate_shift(GtkWidget* canvas, Content* cont, uint8_t index, char code)
+static void animate_shift(GtkWidget* canvas, Content* cont, uint8_t index, char code)
 {
 	/* Hacia que lado es el desplazamiento? (El eje Y crece hacia abajo) */
 	int8_t signum;
@@ -66,27 +65,31 @@ void animate_shift(GtkWidget* canvas, Content* cont, uint8_t index, char code)
 	/* La animación en sí */
 	for(int i = 0; i < frames; i++)
 	{
-		cont -> offset += signum * delta;
+		pthread_mutex_lock(&drawing_mutex);
+			cont -> offset += signum * delta;
+		pthread_mutex_unlock(&drawing_mutex);
 
 		gtk_widget_queue_draw_area(canvas, start_x, start_y, width, height);
-		// gtk_widget_queue_draw(canvas);
+
 		usleep(TIMESTEP * 1000);
 	}
 
-	/* Resetear los parámetros */
-	cont -> offset = 0;
-	cont -> mode = ALL;
-
 	/* Hacer permantente el cambio de posición */
-	shift_fn(cont -> puz, index);
-	gtk_widget_queue_draw(canvas);
+	pthread_mutex_lock(&drawing_mutex);
+		cont -> offset = 0;
+		shift_fn(cont -> puz, index);
+	pthread_mutex_unlock(&drawing_mutex);
+
+	gtk_widget_queue_draw_area(canvas, start_x, start_y, width, height);
 
 	usleep(TOTALTIME * 1000);
 
+	/* Resetear los parámetros */
+	cont -> mode = ALL;
 }
 
 /** Lleva a cabo la actualización del tablero */
-void* update(void* ptr)
+static void* update(void* ptr)
 {
 	/* Desencapsula los parámetros */
 	void** param = ptr;
@@ -110,11 +113,7 @@ void* update(void* ptr)
 		'D'
 	};
 
-
-
-
 	usleep(1000 * 1000);
-
 
 	while(true)
 	{

@@ -7,7 +7,7 @@
 #include "color.h"
 #include <math.h>
 
-double compute_cell_size(Puzzle* puz)
+static double compute_cell_size(Puzzle* puz)
 {
 	/* Tamaño por defecto del canvas */
 	double cell_size     = CELL_SIZE;
@@ -26,8 +26,8 @@ static Puzzle* initial_state()
 {
 	Puzzle* puz = malloc(sizeof(Puzzle));
 
-	puz -> height = 2;
-	puz -> width = 3;
+	puz -> height = 3;
+	puz -> width = 2;
 
 	// fscanf(stdin, "%hhu", &puz -> height);
 	// fscanf(stdin, "%hhu", &puz -> width);
@@ -46,7 +46,7 @@ static Puzzle* initial_state()
 	return puz;
 }
 
-static inline bool check_parameters(int argc, char** argv)
+static bool check_parameters(int argc, char** argv)
 {
 	return argc == 1;
 }
@@ -55,6 +55,8 @@ int main(int argc, char** argv)
 {
 	/* Se revisa que los parametros entregados sean correctos */
   if(!check_parameters(argc, argv)) return 1;
+
+	srand(time(NULL));
 
 	Puzzle* puz = initial_state();
 
@@ -69,8 +71,6 @@ int main(int argc, char** argv)
 	};
 
 	drawing_init(cont.color_table, cont.cell_size);
-
-	printf("Cell size is %lf\n", cont.cell_size);
 
 	window_create(&cont);
 

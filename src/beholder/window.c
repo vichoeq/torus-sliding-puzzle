@@ -6,13 +6,13 @@
 #include "animation.h"
 
 /** Dibuja la imagen en la ventana */
-gboolean draw(GtkWidget* widget, cairo_t* cr, gpointer data)
+static gboolean draw(GtkWidget* widget, cairo_t* cr, gpointer data)
 {
 	return canvas_draw(cr, data);
 }
 
 /** Inicializa el canvas de acuerdo al tablero que se va a dibujar */
-void gtk_canvas_init(GtkWidget* canvas, Content* cont)
+static void gtk_canvas_init(GtkWidget* canvas, Content* cont)
 {
 	/* Tamaño del canvas */
 	double canvas_height = cont -> cell_size * (cont -> puz -> height + 1);
