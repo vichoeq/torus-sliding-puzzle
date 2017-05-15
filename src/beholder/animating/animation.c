@@ -113,7 +113,7 @@ static void* update(void* ptr)
 		'D'
 	};
 
-	usleep(1000 * 1000);
+	usleep(10000 * 1000);
 
 	while(true)
 	{

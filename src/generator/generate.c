@@ -1,24 +1,31 @@
-#include "generate.h"
-#include "../puzzle/puzzle.h"
-#include "palette.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "generate.h"
+#include "../puzzle/puzzle.h"
+#include "../puzzle/operation.h"
+#include "palette.h"
+#include "../random/pcg_basic.h"
 
-void puzzle_print(Puzzle* puz, void* stream)
+void shuffle_puzzle(Puzzle* puz, int entropy)
 {
-	fprintf(stream, "%hhu\n", puz -> height);
-	fprintf(stream, "%hhu\n", puz -> width);
-	for(uint8_t row = 0; row < puz -> height; row++)
+	Operation* ops = operation_generate_all(puz);
+
+	int size = 2 * puz -> width + 2 * puz -> height;
+
+	for(int i = 0; i < entropy; i++)
 	{
-		for(uint8_t col = 0; col < puz -> width; col++)
-		{
-			fprintf(stream, "%hhu ", puz -> matrix[row][col]);
-		}
-		fprintf(stream, "\n");
+
+		Operation op = ops[pcg32_boundedrand(size)];
+		operation_execute(puz, op);
+
+		operation_print(op, stderr);
 	}
+
+	free(ops);
 }
 
-void generate_puzzle(Image* img)
+/** Genera un puzzle nuevo a partir de una imagen */
+void generate_puzzle(Image* img, int entropy)
 {
 	Color* pal = palette_extract(img);
 
@@ -36,6 +43,9 @@ void generate_puzzle(Image* img)
 			puz -> matrix[row][col] = palette_lookup(pal, img -> pixels[row][col]);
 		}
 	}
+
+	shuffle_puzzle(puz, entropy);
+
 	puzzle_print(puz, stdout);
 	puzzle_destroy(puz);
 	free(pal);

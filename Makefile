@@ -46,7 +46,7 @@ LIB=$(PNG) $(GTK) $(MTH)
 ###############################################################################
 
 # Directorios con elementos de uso común
-COMMON=puzzle
+COMMON=puzzle random
 
 # Directorios que serán compilados a un programa
 PROGRAMS=beholder generator

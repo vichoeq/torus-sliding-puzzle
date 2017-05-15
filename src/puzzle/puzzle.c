@@ -1,10 +1,29 @@
 #include "puzzle.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-/** Lee un puzzle a partir de un archivo */
-Puzzle* puzzle_from_file (char* path)
+/** Lee un puzzle a partir de un stream */
+Puzzle* puzzle_from_stream(void* stream)
 {
-	abort();
+	Puzzle* puz = malloc(sizeof(Puzzle));
+
+	// puz -> height = 4;
+	// puz -> width = 5;
+
+	fscanf(stream, "%hhu", &puz -> height);
+	fscanf(stream, "%hhu", &puz -> width);
+
+	puz -> matrix = calloc(puz -> height, sizeof(uint8_t*));
+	for(uint8_t row = 0; row < puz -> height; row++)
+	{
+		puz -> matrix[row] = calloc(puz -> width, sizeof(uint8_t));
+		for(uint8_t col = 0; col < puz -> width; col++)
+		{
+			fscanf(stream, "%hhu", &puz -> matrix[row][col]);
+			// puz -> matrix[row][col] = (row+col)%8;
+		}
+	}
+	return puz;
 }
 
 /** Libera los recursos asociados a un  puzzle */
@@ -57,4 +76,18 @@ void puzzle_shift_down(Puzzle* puz, uint8_t col)
 		puz -> matrix[row][col] = puz -> matrix[row - 1][col];
 	}
 	puz -> matrix[0][col] = aux;
+}
+
+void puzzle_print(Puzzle* puz, void* stream)
+{
+	fprintf(stream, "%hhu\n", puz -> height);
+	fprintf(stream, "%hhu\n", puz -> width);
+	for(uint8_t row = 0; row < puz -> height; row++)
+	{
+		for(uint8_t col = 0; col < puz -> width; col++)
+		{
+			fprintf(stream, "%hhu ", puz -> matrix[row][col]);
+		}
+		fprintf(stream, "\n");
+	}
 }

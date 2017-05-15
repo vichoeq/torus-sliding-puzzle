@@ -2,4 +2,5 @@
 
 #include "imagelib/imagelib.h"
 
-void generate_puzzle(Image* img);
+/** Genera un puzzle nuevo a partir de una imagen */
+void generate_puzzle(Image* img, int entropy);
