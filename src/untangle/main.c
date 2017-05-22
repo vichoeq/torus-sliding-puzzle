@@ -3,6 +3,7 @@
 #include "watcher.h"
 #include <unistd.h>
 #include "search/search.h"
+#include <time.h>
 
 int main(int argc, char** argv)
 {
@@ -17,7 +18,13 @@ int main(int argc, char** argv)
 
 	Operation* ops = operation_generate_all(initial);
 
+
+
+	clock_t start = clock();
+
 	Stack* stack = search(initial, solution);
+
+	printf("Solved in %lf seconds\n", (double)(clock() - start) / CLOCKS_PER_SEC);
 
 	stack_watch(stack);
 
