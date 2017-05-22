@@ -92,6 +92,7 @@ Stack* search(Puzzle* state, Puzzle* final)
 		next_limit = INFINITY;
 		if(search_limited_depth(state, 0, limit, stack, &next_limit))
 		{
+			free(ops);
 			heuristic_free(final);
 			return stack;
 		}
@@ -100,6 +101,5 @@ Stack* search(Puzzle* state, Puzzle* final)
 			limit = next_limit;
 		}
 	}
-
 	abort();
 }

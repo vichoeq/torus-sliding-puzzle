@@ -16,10 +16,6 @@ int main(int argc, char** argv)
 
 	watcher_set_initial_state(initial);
 
-	Operation* ops = operation_generate_all(initial);
-
-
-
 	clock_t start = clock();
 
 	Stack* stack = search(initial, solution);
@@ -28,9 +24,9 @@ int main(int argc, char** argv)
 
 	stack_watch(stack);
 
-	stack_destroy(stack);
+	stack_print(stack, stdout);
 
-	free(ops);
+	stack_destroy(stack);
 
 	puzzle_destroy(solution);
 	puzzle_destroy(initial);
