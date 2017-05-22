@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include "watcher.h"
 #include <unistd.h>
-#include "stack.h"
-#include "search.h"
+#include "search/search.h"
 
 int main(int argc, char** argv)
 {

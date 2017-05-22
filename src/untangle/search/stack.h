@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../puzzle/operation.h"
+#include "../../puzzle/operation.h"
 
 /** Represents a doubly-linked node for a dynamic allocating stack */
 struct operation_node;

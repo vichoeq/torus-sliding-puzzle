@@ -1,6 +1,7 @@
 #include "search.h"
 #include "stack.h"
 #include <stdlib.h>
+#include "heuristic.h"
 
 /** Lista de operaciones */
 static Operation* ops;
