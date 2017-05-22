@@ -1,6 +1,7 @@
 #include "search.h"
 #include "stack.h"
 #include <stdlib.h>
+#include <math.h>
 #include "heuristic.h"
 
 /** Lista de operaciones */
@@ -11,9 +12,16 @@ static uint16_t op_count;
 static Puzzle* goal;
 
 /** Looks for a solution of cost no more than "limit" */
-bool search_limited_depth(Puzzle* state, double cost, double limit, Stack* s)
+bool search_limited_depth(Puzzle* state, double cost, double limit, Stack* s, double* next)
 {
-	if(cost > limit) return false;
+	if(cost > limit)
+ 	{
+		if(cost < *next)
+		{
+			*next = cost;
+		}
+		return false;
+	}
 
 	if(puzzle_equals(state, goal)) return true;
 
@@ -23,7 +31,7 @@ bool search_limited_depth(Puzzle* state, double cost, double limit, Stack* s)
 
 		stack_push(s, ops[i]);
 
-		if(search_limited_depth(state, cost + 1, limit, s))
+		if(search_limited_depth(state, cost + 1 + heuristic_full(state), limit, s, next))
 		{
 			return true;
 		}
@@ -41,19 +49,25 @@ Stack* search(Puzzle* state, Puzzle* final)
 	goal = final;
 	op_count = 2 * (state -> height + state -> width);
 
+	heuristic_init(final);
+
 	Stack* stack = stack_init();
 
 	double limit = 0;
 
+	double next_limit;
+
 	while(true)
 	{
-		if(search_limited_depth(state, 0, limit, stack))
+		next_limit = INFINITY;
+		if(search_limited_depth(state, 0, limit, stack, &next_limit))
 		{
+			heuristic_free(final);
 			return stack;
 		}
 		else
 		{
-			limit += 1;
+			limit = next_limit;
 		}
 	}
 
