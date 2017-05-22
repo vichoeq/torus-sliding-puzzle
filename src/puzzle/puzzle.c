@@ -7,9 +7,6 @@ Puzzle* puzzle_from_stream(void* stream)
 {
 	Puzzle* puz = malloc(sizeof(Puzzle));
 
-	// puz -> height = 4;
-	// puz -> width = 5;
-
 	fscanf(stream, "%hhu", &puz -> height);
 	fscanf(stream, "%hhu", &puz -> width);
 
@@ -20,10 +17,28 @@ Puzzle* puzzle_from_stream(void* stream)
 		for(uint8_t col = 0; col < puz -> width; col++)
 		{
 			fscanf(stream, "%hhu", &puz -> matrix[row][col]);
-			// puz -> matrix[row][col] = (row+col)%8;
 		}
 	}
 	return puz;
+}
+
+/** Indica si dos puzzles son equivalentes */
+bool puzzle_equals(Puzzle* a, Puzzle* b)
+{
+	if(a -> height != b -> height) return false;
+	if(a -> width != b -> width) return false;
+
+	for(uint8_t row = 0; row < a -> height; row++)
+	{
+		for(uint8_t col = 0; col < a -> width; col++)
+		{
+			if(a -> matrix[row][col] != b -> matrix[row][col])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 /** Libera los recursos asociados a un  puzzle */

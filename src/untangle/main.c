@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "watcher.h"
 #include <unistd.h>
+#include "stack.h"
+#include "search.h"
 
 int main(int argc, char** argv)
 {
@@ -16,15 +18,18 @@ int main(int argc, char** argv)
 
 	Operation* ops = operation_generate_all(initial);
 
-	for(int i = 0; i < 2 * initial -> height + 2* initial -> width; i++)
-	{
-		watcher_apply_operation(ops[i]);
-	}
+	Stack* stack = search(initial, solution);
+
+	stack_watch(stack);
+
+	stack_destroy(stack);
 
 	free(ops);
 
 	puzzle_destroy(solution);
 	puzzle_destroy(initial);
+
+	sleep(3);
 
 	watcher_close();
 

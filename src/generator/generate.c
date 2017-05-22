@@ -69,7 +69,7 @@ void generate_from_scratch(uint8_t height, uint8_t width, uint32_t entropy)
 		puz -> matrix[row] = calloc(puz -> width, sizeof(uint8_t));
 		for(uint8_t col = 0; col < puz -> width; col++)
 		{
-			puz -> matrix[row][col] = pcg32_boundedrand(8);
+			puz -> matrix[row][col] = (row) % 8;
 		}
 	}
 	/* Imprime el estado final */

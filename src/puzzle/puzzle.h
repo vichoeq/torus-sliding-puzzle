@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /** Representa un puzzle de colores */
 struct puzzle
@@ -26,6 +27,8 @@ void    puzzle_shift_right (Puzzle* puz, uint8_t row);
 void    puzzle_shift_up    (Puzzle* puz, uint8_t col);
 /** Desplaza la columna especificada hacia abajo */
 void    puzzle_shift_down  (Puzzle* puz, uint8_t col);
+/** Indica si dos puzzles son equivalentes */
+bool    puzzle_equals      (Puzzle* a, Puzzle* b);
 /** Libera los recursos asociados a un  puzzle */
 void    puzzle_destroy     (Puzzle* puzzle);
 /** Imprime el puzzle a un stream determinado */
