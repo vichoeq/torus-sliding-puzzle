@@ -97,66 +97,32 @@ static void* update(void* ptr)
 	Content* cont = param[1];
 	free(param);
 
-	uint8_t range[4] =
-	{
-		cont -> puz -> height,
-		cont -> puz -> width,
-		cont -> puz -> height,
-		cont -> puz -> width
-	};
+	sleep(1);
 
-	char codes[4] =
-	{
-		'R',
-		'U',
-		'L',
-		'D'
-	};
-
-	usleep(10000 * 1000);
+	char buf[4];
+	uint8_t index;
 
 	while(true)
 	{
-		int fn = rand() % 4;
-		uint8_t index = rand() % range[fn];
+		fscanf(stdin, "%s", buf);
 
-		animate_shift(canvas, cont, index, codes[fn]);
+		char code = buf[0];
+
+		if(code == 'X')
+		{
+			gtk_main_quit();
+			break;
+		}
+		else if(code == 'L' || code == 'R' || code  == 'U' || code == 'D')
+		{
+			fscanf(stdin, "%hhu", &index);
+			animate_shift(canvas, cont, index, code);
+		}
+		else
+		{
+			abort();
+		}
 	}
-
-
-
-
-	// /* Row, Column & Value */
-	// uint8_t r, c, v;
-	//
-	//
-	//
-	// char buf[8];
-	//
-	// while(true)
-	// {
-	// 	fscanf(stdin, "%s", buf);
-	//
-	// 	if(!strcmp(buf, "SET"))
-	// 	{
-	// 		fscanf(stdin, "%hhu %hhu %hhu", &r, &c, &v);
-	// 		cont -> puz -> matrix[r][c] = v;
-	// 		gtk_widget_queue_draw(canvas);
-	// 	}
-	// 	else if(!strcmp(buf, "MOV"))
-	// 	{
-	// 		fscanf(stdin, "%hhu", &r);
-	// 		animate_shift_right(canvas, cont, r);
-	// 	}
-	// 	else if(!strcmp(buf, "END"))
-	// 	{
-	// 		break;
-	// 	}
-	// 	else
-	// 	{
-	// 		abort();
-	// 	}
-	// }
 
 	pthread_exit(NULL);
 }

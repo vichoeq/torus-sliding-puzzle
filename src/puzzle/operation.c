@@ -93,7 +93,7 @@ char operation_type(Operation op)
 }
 
 /** Imprime la operacion en un formato legible en el canal especificado */
-void operation_print(Operation op, void* stream)
+int operation_print(Operation op, void* stream)
 {
-	fprintf(stream, "%c %d\n", operation_type(op), parameter(op));
+	return fprintf(stream, "%c %d\n", operation_type(op), parameter(op));
 }

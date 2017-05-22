@@ -12,4 +12,4 @@ void       operation_execute      (Puzzle* puz, Operation op);
 /** Invierte la operación sobre el puzzle, volviendo al estado anterior */
 void       operation_revert       (Puzzle* puz, Operation op);
 /** Imprime la operacion en un formato legible en el canal especificado */
-void       operation_print        (Operation op, void* stream);
+int        operation_print        (Operation op, void* stream);

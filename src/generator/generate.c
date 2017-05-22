@@ -6,7 +6,8 @@
 #include "palette.h"
 #include "../random/pcg_basic.h"
 
-void shuffle_puzzle(Puzzle* puz, int entropy)
+/** Desordena el puzzle. Mientras más alta la entropía, más desordenado */
+void puzzle_shuffle(Puzzle* puz, uint32_t entropy)
 {
 	Operation* ops = operation_generate_all(puz);
 
@@ -14,18 +15,15 @@ void shuffle_puzzle(Puzzle* puz, int entropy)
 
 	for(int i = 0; i < entropy; i++)
 	{
-
 		Operation op = ops[pcg32_boundedrand(size)];
 		operation_execute(puz, op);
-
-		operation_print(op, stderr);
 	}
 
 	free(ops);
 }
 
 /** Genera un puzzle nuevo a partir de una imagen */
-void generate_puzzle(Image* img, int entropy)
+void generate_from_image(Image* img, uint32_t entropy)
 {
 	Color* pal = palette_extract(img);
 
@@ -43,10 +41,43 @@ void generate_puzzle(Image* img, int entropy)
 			puz -> matrix[row][col] = palette_lookup(pal, img -> pixels[row][col]);
 		}
 	}
-
-	shuffle_puzzle(puz, entropy);
-
-	puzzle_print(puz, stdout);
-	puzzle_destroy(puz);
 	free(pal);
+	/* Imprime el estado final */
+	puzzle_print(puz, stdout);
+	/* Lo revuelve */
+	puzzle_shuffle(puz, entropy);
+	/* Imprime el estado inicial */
+	puzzle_print(puz, stdout);
+	/* Libera la memoria */
+	puzzle_destroy(puz);
+}
+
+void generate_from_scratch(uint8_t height, uint8_t width, uint32_t entropy)
+{
+	Color* pal = palette_default();
+	palette_print(pal, stdout);
+	free(pal);
+
+	Puzzle* puz = malloc(sizeof(Puzzle));
+
+	puz -> height = height;
+	puz -> width = width;
+
+	puz -> matrix = calloc(puz -> height, sizeof(uint8_t*));
+	for(uint8_t row = 0; row < puz -> height; row++)
+	{
+		puz -> matrix[row] = calloc(puz -> width, sizeof(uint8_t));
+		for(uint8_t col = 0; col < puz -> width; col++)
+		{
+			puz -> matrix[row][col] = pcg32_boundedrand(8);
+		}
+	}
+	/* Imprime el estado final */
+	puzzle_print(puz, stdout);
+	/* Lo revuelve */
+	puzzle_shuffle(puz, entropy);
+	/* Imprime el estado inicial */
+	puzzle_print(puz, stdout);
+	/* Libera la memoria */
+	puzzle_destroy(puz);
 }

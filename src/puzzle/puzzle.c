@@ -78,16 +78,29 @@ void puzzle_shift_down(Puzzle* puz, uint8_t col)
 	puz -> matrix[0][col] = aux;
 }
 
-void puzzle_print(Puzzle* puz, void* stream)
+int puzzle_print(Puzzle* puz, void* stream)
 {
-	fprintf(stream, "%hhu\n", puz -> height);
-	fprintf(stream, "%hhu\n", puz -> width);
+	if(fprintf(stream, "%hhu\n", puz -> height) < 0)
+	{
+		return -1;
+	}
+	if(fprintf(stream, "%hhu\n", puz -> width) < 0)
+	{
+		return -1;
+	}
 	for(uint8_t row = 0; row < puz -> height; row++)
 	{
 		for(uint8_t col = 0; col < puz -> width; col++)
 		{
-			fprintf(stream, "%hhu ", puz -> matrix[row][col]);
+			if(fprintf(stream, "%hhu ", puz -> matrix[row][col]) < 0)
+			{
+				return -1;
+			}
 		}
-		fprintf(stream, "\n");
+		if(fprintf(stream, "\n") < 0)
+		{
+			return -1;
+		}
 	}
+	return 1;
 }

@@ -29,7 +29,7 @@ void    puzzle_shift_down  (Puzzle* puz, uint8_t col);
 /** Libera los recursos asociados a un  puzzle */
 void    puzzle_destroy     (Puzzle* puzzle);
 /** Imprime el puzzle a un stream determinado */
-void    puzzle_print       (Puzzle* puzzle, void* stream);
+int     puzzle_print       (Puzzle* puzzle, void* stream);
 
 /** Funciones de desplazamiento */
 typedef void (*shift_fn_t)(Puzzle*,uint8_t);

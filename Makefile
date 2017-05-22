@@ -49,7 +49,7 @@ LIB=$(PNG) $(GTK) $(MTH)
 COMMON=puzzle random
 
 # Directorios que serán compilados a un programa
-PROGRAMS=beholder generator
+PROGRAMS=beholder generator untangle
 
 # Todos los directorios que contienen archivos de código
 SRCDIR=$(COMMON) $(PROGRAMS)
