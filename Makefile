@@ -16,8 +16,8 @@ OBJ=obj
 # OPTIMIZACIÓN POR COMPILADOR (descomenta el que necesites, comenta el otro)  #
 ###############################################################################
 
-OPT=-g # Guardar toda la información para poder debugear. No optimiza
-# OPT=-O3 # Optimiza al máximo, descarta toda la información de debug.
+# OPT=-g # Guardar toda la información para poder debugear. No optimiza
+OPT=-O3 # Optimiza al máximo, descarta toda la información de debug.
 
 ###############################################################################
 # PARÁMETROS                                                                  #

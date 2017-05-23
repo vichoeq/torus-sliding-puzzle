@@ -18,5 +18,7 @@ obj/
 # Except for the ones inside the template folder
 !templates/*.png
 
+*.txt
+*.pdf
 !Makefile
 !LICENSE

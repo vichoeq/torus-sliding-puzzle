@@ -6,6 +6,7 @@
 Stack* stack_init()
 {
 	Stack* stack = malloc(sizeof(Stack));
+	// stack -> count = 0;
 
 	Node* empty = malloc(sizeof(Node));
 	empty -> empty = true;
@@ -42,6 +43,8 @@ void stack_push(Stack* stack, Operation op)
 	{
 		stack -> tail = stack -> tail -> next;
 	}
+
+	// stack -> count++;
 }
 /** Saca la última operación insertada */
 Operation stack_pop(Stack* stack)
@@ -50,6 +53,8 @@ Operation stack_pop(Stack* stack)
 
 	stack -> tail = stack -> tail -> prev;
 	stack -> tail -> empty = true;
+
+	// stack -> count--;
 
 	return op;
 }
@@ -77,7 +82,7 @@ void stack_print   (Stack* stack, void* stream)
 	}
 }
 
-
+/** Libera recursivamente todos los nodos del stack */
 static void node_destroy(Node* node)
 {
 	if(node -> next)
@@ -92,4 +97,15 @@ void stack_destroy (Stack* stack)
 {
 	node_destroy(stack -> head);
 	free(stack);
+}
+
+/** Counts the amount of elements in the stack */
+int stack_count(Stack* stack)
+{
+	int count = 0;
+	for(Node* n = stack -> head; !n -> empty; n = n -> next)
+	{
+		count++;
+	}
+	return count;
 }
