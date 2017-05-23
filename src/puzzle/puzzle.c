@@ -7,8 +7,8 @@ Puzzle* puzzle_from_stream(void* stream)
 {
 	Puzzle* puz = malloc(sizeof(Puzzle));
 
-	fscanf(stream, "%hhu", &puz -> height);
-	fscanf(stream, "%hhu", &puz -> width);
+	fscanf(stream, "%hhu", &puz -> height) ? : abort();
+	fscanf(stream, "%hhu", &puz -> width) ? : abort();
 
 	puz -> matrix = calloc(puz -> height, sizeof(uint8_t*));
 	for(uint8_t row = 0; row < puz -> height; row++)
@@ -16,7 +16,7 @@ Puzzle* puzzle_from_stream(void* stream)
 		puz -> matrix[row] = calloc(puz -> width, sizeof(uint8_t));
 		for(uint8_t col = 0; col < puz -> width; col++)
 		{
-			fscanf(stream, "%hhu", &puz -> matrix[row][col]);
+			fscanf(stream, "%hhu", &puz -> matrix[row][col]) ? : abort();
 		}
 	}
 	return puz;

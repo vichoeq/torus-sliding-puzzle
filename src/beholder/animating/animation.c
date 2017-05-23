@@ -104,7 +104,7 @@ static void* update(void* ptr)
 
 	while(true)
 	{
-		fscanf(stdin, "%s", buf);
+		fscanf(stdin, "%s", buf) ? : abort();
 
 		char code = buf[0];
 
@@ -117,13 +117,13 @@ static void* update(void* ptr)
 		/* Snapshot */
 		else if(code == 'S')
 		{
-			fscanf(stdin, "%s", buf);
+			fscanf(stdin, "%s", buf) ? : abort();
 			drawing_snapshot(cont, buf);
 		}
 		/* Shift */
 		else if(code == 'L' || code == 'R' || code  == 'U' || code == 'D')
 		{
-			fscanf(stdin, "%hhu", &index);
+			fscanf(stdin, "%hhu", &index) ? : abort();
 			animate_shift(canvas, cont, index, code);
 		}
 		else

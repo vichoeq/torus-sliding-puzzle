@@ -18,6 +18,15 @@
 /* El parametro son los últimos 6 bits, asi que queremos sólo esos 6 bits */
 #define parameter(op) ((op) & 0b00111111)
 
+/** Códigos corespondientes a las 4 operaciones */
+static const char codes[4] =
+{
+	'R',
+	'U',
+	'D',
+	'L'
+};
+
 /** Funciones de desplazamiento para el puzzle */
 static const shift_fn_t functions[4] =
 {
@@ -82,18 +91,23 @@ void operation_revert(Puzzle* puz, Operation op)
 /** Obtiene la letra correspondiente al tipo de operación */
 char operation_type(Operation op)
 {
-	switch(operation(op))
-	{
-		case 0: return 'R';
-		case 1: return 'U';
-		case 2: return 'D';
-		case 3: return 'L';
-		default: fprintf(stderr, "Invalid op: %d\n", operation(op)); abort();
-	}
+	return codes[operation(op)];
 }
 
 /** Imprime la operacion en un formato legible en el canal especificado */
 int operation_print(Operation op, void* stream)
 {
 	return fprintf(stream, "%c %d\n", operation_type(op), parameter(op));
+}
+
+/** Obtiene el índice sobre el cual se efectua la operación */
+uint8_t operation_index(Operation op)
+{
+	return parameter(op);
+}
+
+/** Obtiene la dirección de la operación: 'L', 'R', 'U' o 'D' */
+char operation_direction(Operation op)
+{
+	return operation_type(op);
 }
