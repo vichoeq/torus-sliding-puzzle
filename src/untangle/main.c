@@ -34,7 +34,8 @@ int main(int argc, char** argv)
 	/* Resuelve el problema  */
 	clock_t start = clock();
 	Stack* stack = search(initial, solution);
-	printf("Solved in %lf seconds\n", (double)(clock() - start) / CLOCKS_PER_SEC);
+	double elapsed = (double)(clock() - start) / CLOCKS_PER_SEC;
+	fprintf(stderr, "Solved in %lf seconds\n", elapsed);
 
 	/* Anima la solución */
 	stack_watch(stack);
