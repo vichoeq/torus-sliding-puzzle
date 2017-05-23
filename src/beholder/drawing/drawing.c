@@ -1,7 +1,9 @@
 #include <stdio.h>
-#include "drawing.h"
 #include <stdlib.h>
 #include <math.h>
+#include <cairo-pdf.h>
+#include "drawing.h"
+
 
 /** La razón entre ambos cuadrados de una celda */
 #define RATIO 0.5
@@ -172,8 +174,7 @@ static void draw_frame(cairo_t* restrict cr, Content* restrict cont)
 	cairo_set_fill_rule (cr, CAIRO_FILL_RULE_WINDING);
 }
 
-
-bool canvas_draw(cairo_t* restrict cr, Content* restrict cont)
+bool drawing_draw(cairo_t* restrict cr, Content* restrict cont)
 {
 	pthread_mutex_lock(&drawing_mutex);
 
@@ -231,6 +232,7 @@ void drawing_free()
 	pthread_mutex_destroy(&drawing_mutex);
 }
 
+/** Genera de antemano las imagenes para los distintos bloques */
 void drawing_init(Color* color_table, double const cell_size)
 {
 	for(int i = 0; i < 8; i++)
@@ -247,4 +249,67 @@ void drawing_init(Color* color_table, double const cell_size)
 	}
 
 	pthread_mutex_init(&drawing_mutex, NULL);
+}
+
+static void snapshot_draw(cairo_t* restrict cr, Content* restrict cont)
+{
+	/* Color de fondo */
+	// color_dip(cr, BGC);
+	cairo_set_source_rgba(cr, 1, 1, 1, 0);
+	cairo_paint(cr);
+
+	uint8_t width = cont -> puz -> width;
+	uint8_t height = cont -> puz -> height;
+
+	/* Dibuja los bloques */
+	for(int16_t row = 0; row < height; row++)
+  {
+    for(int16_t col = 0; col < width; col++)
+    {
+			int r = (height + row) % height;
+			int c = (width + col) % width;
+			int index = cont -> puz -> matrix[r][c];
+
+			double cell_size = cont -> cell_size;
+
+			double cx = (col + 0.5) * cell_size;
+			double cy = (row + 0.5) * cell_size;
+
+			draw_block(cr, cont -> color_table[index], cx, cy, cell_size);
+    }
+  }
+
+	/* Tapa los bloques exteriores */
+	// draw_frame(cr, cont);
+}
+
+/** Geenera una imagen en pdf para un estado en particular */
+void drawing_snapshot(Content* cont, char* filename)
+{
+	const double cell_size = 3 * CELL_SIZE;
+
+	double width = cell_size * (cont -> puz -> width);
+	double height = cell_size * (cont -> puz -> height);
+
+	/* Imprimimos las imagenes del tablero */
+	cairo_surface_t* surface;
+	cairo_t *cr;
+
+	surface = cairo_pdf_surface_create (filename, width, height);
+	cr = cairo_create(surface);
+
+	/* Reseteamos los parámetros para generar correctamente la imagen */
+	Content aux = (Content)
+	{
+		.cell_size = cell_size,
+		.puz = cont -> puz,
+		.color_table = cont -> color_table,
+		.mode = ALL
+	};
+
+	/* Dibuja el estado actual */
+	snapshot_draw(cr, &aux);
+
+	cairo_surface_destroy(surface);
+	cairo_destroy(cr);
 }

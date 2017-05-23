@@ -99,7 +99,7 @@ static void* update(void* ptr)
 
 	sleep(1);
 
-	char buf[4];
+	char buf[32];
 	uint8_t index;
 
 	while(true)
@@ -108,11 +108,19 @@ static void* update(void* ptr)
 
 		char code = buf[0];
 
+		/* Close window */
 		if(code == 'X')
 		{
 			gtk_main_quit();
 			break;
 		}
+		/* Snapshot */
+		else if(code == 'S')
+		{
+			fscanf(stdin, "%s", buf);
+			drawing_snapshot(cont, buf);
+		}
+		/* Shift */
 		else if(code == 'L' || code == 'R' || code  == 'U' || code == 'D')
 		{
 			fscanf(stdin, "%hhu", &index);

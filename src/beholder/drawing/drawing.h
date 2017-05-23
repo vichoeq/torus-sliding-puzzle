@@ -49,6 +49,8 @@ void drawing_init(Color* color_table, double const cell_size);
 
 void drawing_free();
 
+/** Geenera una imagen en pdf para un estado en particular */
+void drawing_snapshot(Content* cont, char* filename);
 
 /** Dibuja sobre el canvas dado */
-bool canvas_draw(cairo_t* cr, Content* cont);
+bool drawing_draw(cairo_t* cr, Content* cont);

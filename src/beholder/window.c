@@ -7,7 +7,7 @@
 /** Dibuja la imagen en la ventana */
 static gboolean draw(GtkWidget* widget, cairo_t* cr, gpointer data)
 {
-	return canvas_draw(cr, data);
+	return drawing_draw(cr, data);
 }
 
 /** Inicializa el canvas de acuerdo al tablero que se va a dibujar */

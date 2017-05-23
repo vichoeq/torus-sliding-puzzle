@@ -13,6 +13,22 @@ void watcher_init()
 	watcher = popen(WATCHER, "w");
 }
 
+/** Imprime un archivo .pdf con el contenido actual de la ventana */
+void watcher_snapshot(char* filename)
+{
+	if(watcher)
+	{
+		if(fprintf(watcher, "S %s\n",filename) < 0)
+		{
+			watcher_close();
+		}
+		else
+		{
+			fflush(watcher);
+		}
+	}
+}
+
 /** Reads the color palette and sends it to the watcher */
 void watcher_read_color_palette(void* stream)
 {

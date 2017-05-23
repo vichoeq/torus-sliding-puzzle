@@ -31,8 +31,6 @@ int main(int argc, char** argv)
 	puzzle_destroy(solution);
 	puzzle_destroy(initial);
 
-	sleep(3);
-
 	watcher_close();
 
 	return 0;

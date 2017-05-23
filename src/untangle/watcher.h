@@ -4,6 +4,8 @@
 
 /** Initializes the watcher, the graphic interface module */
 void watcher_init               ();
+/** Imprime un archivo .pdf con el contenido actual de la ventana */
+void watcher_snapshot           (char* filename);
 /** Reads the color palette and sends it to the watcher */
 void watcher_read_color_palette (void* stream);
 /** Sets the initial state for the watcher's puzzle */
