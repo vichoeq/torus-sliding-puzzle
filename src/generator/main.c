@@ -12,32 +12,32 @@ static void check_parameters(int argc, char** argv)
 
 	if (argc < 5)
 	{
-		printf("Modo de uso:\n\n");
+		printf("Usage:\n\n");
 		printf("\t %s <seed> <entropy> <height> <width>\n", argv[0]);
 		printf("\t %s <seed> <entropy> -i <image>\n\n", argv[0]);
-		printf("<seed> es la semilla aleatoria, para replicar resultados\n");
-		printf("<entropy> es que tan desordenado debería empezar el puzzle\n");
-		printf("<height> es la cantidad de filas del puzzle, menor a 64\n");
-		printf("<width> es la cantidad de columnas del puzzle, menor a 64\n");
-		printf("<image> es la la ruta a la imagen a usar, esta debe cumplir con las restricciones de tamaño y puede tener como máximo 8 colores distintos\n");
+		printf("<seed> is the random seed\n");
+		printf("<entropy> how many random moves are applied to the puzzle\n");
+		printf("<height> amount of rows of the puzzle, less than 64\n");
+		printf("<width> amount of columns of the puzzle, less than 64\n");
+		printf("<image> is the path to a .png image, which must follow width and height restrictions and have at most 8 different colors\n");
     exit(1);
   }
 	int entropy = atoi(argv[2]);
 	if(entropy < 0)
 	{
-		printf("Valor inválido para entropy: %d\n", entropy);
+		printf("Invalid value for entropy: %d\n", entropy);
 		exit(2);
 	}
 	int height = atoi(argv[3]);
 	if(!height || height >= 64)
 	{
-		printf("Valor inválido para height: %d\n", height);
+		printf("Invalid value for height: %d\n", height);
 		exit(3);
 	}
 	int width = atoi(argv[4]);
 	if(!width || width >= 64)
 	{
-		printf("Valor inválido para width: %d\n", width);
+		printf("Invalid value for width: %d\n", width);
 		exit(4);
 	}
 }

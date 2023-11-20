@@ -283,8 +283,41 @@ static void snapshot_draw(cairo_t* restrict cr, Content* restrict cont)
 	// draw_frame(cr, cont);
 }
 
-/** Geenera una imagen en pdf para un estado en particular */
+/** Genera una imagen en png para un estado en particular */
 void drawing_snapshot(Content* cont, char* filename)
+{
+	const double cell_size = cont -> cell_size;
+
+	double width = cell_size * (cont -> puz -> width + 1);
+	double height = cell_size * (cont -> puz -> height + 1);
+
+	/* Imprimimos las imagenes del tablero */
+	cairo_surface_t* surface;
+	cairo_t *cr;
+
+	surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+	cr = cairo_create(surface);
+
+	/* Reseteamos los parámetros para generar correctamente la imagen */
+	Content aux = (Content)
+	{
+		.cell_size = cont -> cell_size,
+		.puz = cont -> puz,
+		.color_table = cont -> color_table,
+		.mode = ALL
+	};
+
+	/* Dibuja el estado actual */
+	drawing_draw(cr, &aux);
+
+	cairo_surface_write_to_png(surface, filename);
+
+	cairo_surface_destroy(surface);
+	cairo_destroy(cr);
+}
+
+
+void drawing_snapshot_pdf(Content* cont, char* filename)
 {
 	const double cell_size = 3 * CELL_SIZE;
 
