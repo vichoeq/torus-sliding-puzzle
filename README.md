@@ -10,27 +10,18 @@ All three programs are written in C, and were written and tested on Ubuntu/WSL2.
 
 Given a H x W grid with colored cells, the player must shift cells along rows or columns to reach the desired configuration. Cells that go out of the board appear on the other side. For example:
 
+<p align="center">
+  <img alt="Light" src="assets/example_1_init.png" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Dark" src="assets/example_1_goal.png" width="45%">
+</p>
 
+We have the starting configuration on the left, and the goal on the right. A solution would be as follows:
 
-<div style="display:flex">
-  <div float="left" style="text-align:center">  
-    <img src="assets/example_1_init.png" width="90%"/>
-    <br/>
-    Initial configuration
-  </div>
-  <div float="left" style="text-align:center">  
-    <img src="assets/example_1_goal.png"  width="90%"/>
-    <br/>
-    Goal
-  </div>
-</div>
-<br/>
-
-
-A solution would be as follows:
-
-<img src="assets/example_1_solution.gif"  width="45%" style="display:block; margin-left: auto; margin-right: auto;"/>
-<br/>
+<p align="center">
+  <img src="assets/example_1_solution.gif"  width="45%" style="display:block; margin-left: auto; margin-right: auto;"/>
+  <br/>
+</p>
 
 # Requirements
 
@@ -79,21 +70,13 @@ The generator will create a grid of the specified size, filling each row with on
 ./generator 123987 12 5 5
 ```
 
-yields the following puzzle:
+yields the following puzzle, with the starting configuration on the left and the goal on the right:
 
-<div style="display:flex">
-  <div float="left" style="text-align:center">  
-    <img src="assets/example_2_init.png" width="90%"/>
-    <br/>
-    Initial configuration
-  </div>
-  <div float="left" style="text-align:center">  
-    <img src="assets/example_2_goal.png"  width="90%"/>
-    <br/>
-    Goal
-  </div>
-</div>
-<br/>
+<p align="center">
+  <img alt="Light" src="assets/example_2_init.png" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Dark" src="assets/example_2_goal.png" width="45%">
+</p>
 
 To generate a puzzle from an image, run
 
@@ -115,21 +98,14 @@ For example,
 ./generator 190102 5 -i templates/mario.png
 ```
 
-yields the following puzzle:
+yields the following puzzle, with the starting configuration on the left and the goal on the right:
 
-<div style="display:flex">
-  <div float="left" style="text-align:center">  
-    <img src="assets/example_3_init.png" width="90%"/>
-    <br/>
-    Initial configuration
-  </div>
-  <div float="left" style="text-align:center">  
-    <img src="assets/example_3_goal.png"  width="90%"/>
-    <br/>
-    Goal
-  </div>
-</div>
-<br/>
+<p align="center">
+  <img alt="Light" src="assets/example_3_init.png" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Dark" src="assets/example_3_goal.png" width="45%">
+</p>
+
 
 
 ## Solver
@@ -155,6 +131,7 @@ For example:
 ```
 
 yields the following: 
-
-<img src="assets/example_4_solution.gif"  width="75%" style="display:block; margin-left: auto; margin-right: auto;"/>
-<br/>
+<p align="center">
+  <img src="assets/example_4_solution.gif"  width="75%" style="display:block; margin-left: auto; margin-right: auto;"/>
+  <br/>
+</p>
