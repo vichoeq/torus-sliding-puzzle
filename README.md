@@ -11,15 +11,15 @@ All three programs are written in C, and were written and tested on Ubuntu/WSL2.
 Given a H x W grid with colored cells, the player must shift cells along rows or columns to reach the desired configuration. Cells that go out of the board appear on the other side. For example:
 
 <p align="center">
-  <img alt="Light" src="assets/example_1_init.png" width="45%">
+  <img alt="Light" src="assets/example_1_init.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="assets/example_1_goal.png" width="45%">
+  <img alt="Dark" src="assets/example_1_goal.png" width="25%">
 </p>
 
 We have the starting configuration on the left, and the goal on the right. A solution would be as follows:
 
 <p align="center">
-  <img src="assets/example_1_solution.gif"  width="45%" style="display:block; margin-left: auto; margin-right: auto;"/>
+  <img src="assets/example_1_solution.gif"  width="25%" style="display:block; margin-left: auto; margin-right: auto;"/>
   <br/>
 </p>
 
@@ -73,9 +73,9 @@ The generator will create a grid of the specified size, filling each row with on
 yields the following puzzle, with the starting configuration on the left and the goal on the right:
 
 <p align="center">
-  <img alt="Light" src="assets/example_2_init.png" width="45%">
+  <img alt="Light" src="assets/example_2_init.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="assets/example_2_goal.png" width="45%">
+  <img alt="Dark" src="assets/example_2_goal.png" width="25%">
 </p>
 
 To generate a puzzle from an image, run
@@ -101,9 +101,9 @@ For example,
 yields the following puzzle, with the starting configuration on the left and the goal on the right:
 
 <p align="center">
-  <img alt="Light" src="assets/example_3_init.png" width="45%">
+  <img alt="Light" src="assets/example_3_init.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="assets/example_3_goal.png" width="45%">
+  <img alt="Dark" src="assets/example_3_goal.png" width="25%">
 </p>
 
 
@@ -132,6 +132,8 @@ For example:
 
 yields the following: 
 <p align="center">
-  <img src="assets/example_4_solution.gif"  width="75%" style="display:block; margin-left: auto; margin-right: auto;"/>
+  <img src="assets/example_4_solution.gif"  width="35%" style="display:block; margin-left: auto; margin-right: auto;"/>
   <br/>
 </p>
+
+Happy solving!
